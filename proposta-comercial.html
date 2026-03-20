@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proposta Comercial – Marmoraria</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Raleway:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* Dark warm marble tones — não preto, não claro */
+      --bg:        #16130f;
+      --surface:   #1e1a14;
+      --surface2:  #252018;
+      --surface3:  #2c2720;
+      --marble-vein: rgba(200,175,120,0.07);
+
+      /* Acentos */
+      --gold:       #c9a96e;
+      --gold-light: #e0c88a;
+      --gold-dark:  #8a6830;
+      --cyan:       #4dd9c0;
+      --cyan-dim:   rgba(77,217,192,0.12);
+
+      /* Texto */
+      --text:   #e8dece;
+      --muted:  #7a6e60;
+      --white:  #f5f0e8;
+
+      /* Bordas / sombras */
+      --border:      rgba(201,169,110,0.20);
+      --border-cyan: rgba(77,217,192,0.18);
+      --glow-gold:   0 0 22px rgba(201,169,110,0.18);
+      --glow-cyan:   0 0 18px rgba(77,217,192,0.20);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Raleway', sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* ── VEIAS DE MÁRMORE NO FUNDO ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        /* veias diagonais quentes */
+        repeating-linear-gradient(
+          132deg,
+          transparent 0px, transparent 55px,
+          rgba(200,170,100,0.055) 55px, rgba(200,170,100,0.055) 56px,
+          transparent 56px, transparent 110px,
+          rgba(180,150,80,0.04)  110px, rgba(180,150,80,0.04)  111px,
+          transparent 111px, transparent 175px,
+          rgba(210,185,125,0.03) 175px, rgba(210,185,125,0.03) 176px,
+          transparent 176px
+        ),
+        repeating-linear-gradient(
+          48deg,
+          transparent 0px, transparent 90px,
+          rgba(190,165,105,0.04) 90px, rgba(190,165,105,0.04) 91px,
+          transparent 91px, transparent 185px,
+          rgba(165,140,85,0.03)  185px, rgba(165,140,85,0.03)  186px,
+          transparent 186px
+        );
+    }
+
+    /* ── PAGE ── */
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 13mm 15mm 13mm 15mm;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    /* ── MOLDURA INTERNA ── */
+    .page::before {
+      content: '';
+      position: absolute;
+      inset: 8mm;
+      border: 1px solid var(--border);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── CANTOS DUPLOS (ouro + tech) ── */
+    .corner {
+      position: absolute;
+      width: 20px; height: 20px;
+      z-index: 3;
+    }
+    .corner--tl { top: 7.5mm; left: 7.5mm;   border-top: 2px solid var(--gold); border-left: 2px solid var(--gold); }
+    .corner--tr { top: 7.5mm; right: 7.5mm;  border-top: 2px solid var(--gold); border-right: 2px solid var(--gold); }
+    .corner--bl { bottom: 7.5mm; left: 7.5mm;  border-bottom: 2px solid var(--gold); border-left: 2px solid var(--gold); }
+    .corner--br { bottom: 7.5mm; right: 7.5mm; border-bottom: 2px solid var(--gold); border-right: 2px solid var(--gold); }
+
+    /* ponto no centro dos cantos */
+    .corner::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 6px var(--gold);
+    }
+
+    /* ── HEADER ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 7mm;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo-box { display: flex; align-items: center; gap: 12px; }
+
+    .logo-icon {
+      width: 52px; height: 52px;
+      background: linear-gradient(145deg, #2e2720, #1a1510);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--glow-gold);
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-icon::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(201,169,110,0.12), transparent 60%);
+    }
+
+    .logo-icon svg { width: 30px; height: 30px; position: relative; z-index: 1; }
+
+    .logo-text { line-height: 1.2; }
+
+    .logo-text .brand {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--gold-light);
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
+
+    .logo-text .tagline {
+      font-size: 9px;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .header-meta { text-align: right; }
+
+    .header-meta .doc-type {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 7.5px;
+      color: var(--muted);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .header-meta .doc-date {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    /* ── LINHA OURO ── */
+    .gold-line {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dark), var(--gold), var(--gold-light), var(--gold), var(--gold-dark), transparent);
+      margin: 4mm 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      z-index: 2;
+      margin: 6mm 0;
+      padding: 7mm 8mm 7mm 11mm;
+      background: linear-gradient(125deg, var(--surface2) 0%, var(--surface3) 100%);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--gold);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    /* veias de mármore dentro do hero */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          145deg,
+          transparent 0px, transparent 30px,
+          rgba(201,169,110,0.06) 30px, rgba(201,169,110,0.06) 31px,
+          transparent 31px
+        );
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -20px; top: -20px;
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(77,217,192,0.06), transparent 70%);
+    }
+
+    .hero .pre-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 8px;
+      color: var(--cyan);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+      position: relative; z-index: 1;
+    }
+
+    .hero h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 5px;
+      position: relative; z-index: 1;
+    }
+
+    .hero h1 span { color: var(--gold-light); }
+
+    .hero .subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      font-style: italic;
+      color: var(--muted);
+      position: relative; z-index: 1;
+    }
+
+    .hero-badge {
+      position: absolute;
+      right: 8mm; top: 50%;
+      transform: translateY(-50%);
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: rgba(30,26,20,0.6);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 7px;
+      letter-spacing: 1px;
+      text-align: center;
+      box-shadow: var(--glow-gold);
+      z-index: 2;
+    }
+
+    .hero-badge .year { font-size: 16px; font-weight: 800; letter-spacing: 0; line-height: 1.1; display: block; }
+
+    /* ── SECTION ── */
+    .section {
+      position: relative; z-index: 2;
+      margin-bottom: 6mm;
+      page-break-inside: avoid;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4mm;
+    }
+
+    .section-num {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 8px;
+      color: var(--bg);
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+      padding: 2px 8px;
+      border-radius: 3px;
+      letter-spacing: 1.5px;
+      flex-shrink: 0;
+    }
+
+    .section-title h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1; height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+
+    /* ── BODY TEXT ── */
+    .body-text {
+      font-size: 13px;
+      color: #b8a898;
+      line-height: 1.85;
+    }
+
+    /* ── SUBSECTION ── */
+    .subsection { margin: 4mm 0; }
+
+    .subsection-title {
+      font-family: 'Raleway', sans-serif;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 3mm;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .subsection-title::before {
+      content: '';
+      display: inline-block;
+      width: 16px; height: 1.5px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    }
+
+    /* ── CARD GRID ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3mm;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--gold-dark);
+      border-radius: 6px;
+      padding: 4mm 5mm;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* veias no card */
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        140deg,
+        transparent 0px, transparent 38px,
+        rgba(201,169,110,0.04) 38px, rgba(201,169,110,0.04) 39px,
+        transparent 39px
+      );
+      pointer-events: none;
+    }
+
+    .card .card-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--gold-light);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 2mm;
+      position: relative; z-index: 1;
+    }
+
+    .card p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.65;
+      position: relative; z-index: 1;
+    }
+
+    /* ── FEATURE LIST ── */
+    .feature-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2mm 5mm;
+    }
+
+    .feature-list li {
+      font-size: 12.5px;
+      color: #b8a898;
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      line-height: 1.55;
+    }
+
+    .feature-list li::before {
+      content: '◆';
+      color: var(--gold);
+      flex-shrink: 0;
+      margin-top: 2px;
+      font-size: 7px;
+    }
+
+    /* ── INVESTMENT ── */
+    .invest-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4mm;
+    }
+
+    .invest-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 5mm 6mm;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* veias no invest-card */
+    .invest-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        138deg,
+        transparent 0px, transparent 42px,
+        rgba(201,169,110,0.05) 42px, rgba(201,169,110,0.05) 43px,
+        transparent 43px
+      );
+      pointer-events: none;
+    }
+
+    .invest-card.highlight {
+      border-color: rgba(201,169,110,0.45);
+      box-shadow: var(--glow-gold);
+    }
+
+    .invest-card.highlight::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold-dark));
+    }
+
+    .invest-card .type {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 7px;
+      color: var(--muted);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 3mm;
+      position: relative; z-index: 1;
+    }
+
+    .invest-card .label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 3mm;
+      position: relative; z-index: 1;
+    }
+
+    .invest-card .price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--gold-light);
+      line-height: 1;
+      margin-bottom: 1mm;
+      position: relative; z-index: 1;
+    }
+
+    .invest-card .price-sub {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 7.5px;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 3mm;
+      position: relative; z-index: 1;
+    }
+
+    .invest-card ul {
+      list-style: none;
+      border-top: 1px solid var(--border);
+      padding-top: 3mm;
+      position: relative; z-index: 1;
+    }
+
+    .invest-card ul li {
+      font-size: 11.5px;
+      color: var(--muted);
+      padding: 1px 0;
+      display: flex;
+      gap: 7px;
+      align-items: flex-start;
+    }
+
+    .invest-card ul li::before {
+      content: '–';
+      color: var(--gold);
+      flex-shrink: 0;
+      line-height: 1.6;
+    }
+
+    /* ── BENEFITS ── */
+    .benefits-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3mm;
+    }
+
+    .benefit-item {
+      text-align: center;
+      padding: 4mm 3mm;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .benefit-item::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--cyan-dim), transparent);
+    }
+
+    .benefit-icon {
+      width: 36px; height: 36px;
+      margin: 0 auto 2mm;
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(201,169,110,0.12), rgba(77,217,192,0.06));
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .benefit-icon svg { width: 16px; height: 16px; }
+
+    .benefit-item .btitle {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 8.5px;
+      font-weight: 600;
+      color: var(--gold-light);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .benefit-item .bdesc {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      position: relative; z-index: 2;
+      margin-top: 7mm;
+      padding-top: 5mm;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .footer-left { font-size: 10px; color: var(--muted); }
+
+    .footer-left .flabel {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 8px;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .footer-right {
+      font-size: 10px;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .footer-right .femail {
+      display: block;
+      color: var(--cyan);
+      font-size: 10px;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    .gold-rule {
+      width: 50px; height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin-top: 4px;
+    }
+
+    /* ── SCAN LINE DECORATIVA ── */
+    .scanline {
+      position: absolute;
+      left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(77,217,192,0.12), transparent);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      body { background: var(--bg); }
+      .page { margin: 0; padding: 11mm 13mm; }
+    }
+
+    @page { size: A4; margin: 0; }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="corner corner--tl"></div>
+  <div class="corner corner--tr"></div>
+  <div class="corner corner--bl"></div>
+  <div class="corner corner--br"></div>
+
+  <!-- ── HEADER ── -->
+  <header class="header">
+    <div class="logo-box">
+      <div class="logo-icon">
+        <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="15,2 27,8.5 27,21.5 15,28 3,21.5 3,8.5" stroke="#c9a96e" stroke-width="1.5" fill="none"/>
+          <polygon points="15,7 22,11 22,19 15,23 8,19 8,11" fill="rgba(201,169,110,0.12)" stroke="#c9a96e" stroke-width="0.8"/>
+          <circle cx="15" cy="15" r="2.5" fill="#c9a96e" opacity="0.9"/>
+          <line x1="15" y1="7"  x2="15" y2="2"  stroke="#4dd9c0" stroke-width="0.8"/>
+          <line x1="15" y1="23" x2="15" y2="28" stroke="#4dd9c0" stroke-width="0.8"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <div class="brand">Sua Empresa</div>
+        <div class="tagline">Soluções Digitais</div>
+      </div>
+    </div>
+    <div class="header-meta">
+      <div class="doc-type">Documento Confidencial</div>
+      <div class="doc-date">Março de 2026</div>
+    </div>
+  </header>
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="pre-label">Proposta Comercial</div>
+    <h1>Desenvolvimento de Site &amp;<br/><span>Loja Online</span></h1>
+    <div class="subtitle">Solução digital completa para Marmoraria</div>
+    <div class="hero-badge">
+      <span class="year">2026</span>
+      <span>DIGITAL</span>
+    </div>
+  </div>
+
+  <div class="gold-line"></div>
+
+  <!-- ── 1. APRESENTAÇÃO ── -->
+  <div class="section">
+    <div class="section-title">
+      <span class="section-num">01</span>
+      <h2>Apresentação</h2>
+    </div>
+    <p class="body-text">
+      A presente proposta tem como objetivo o desenvolvimento de um <strong style="color:var(--white)">site institucional integrado a uma loja online</strong>, voltado para atender às necessidades da marmoraria, proporcionando maior visibilidade digital, organização dos processos comerciais e ampliação das oportunidades de venda.
+    </p>
+    <br/>
+    <p class="body-text">
+      A solução será projetada com foco em <strong style="color:var(--gold-light)">design moderno, usabilidade, performance e conversão de clientes</strong>, garantindo uma presença digital profissional e alinhada ao mercado atual.
+    </p>
+  </div>
+
+  <!-- ── 2. ESCOPO ── -->
+  <div class="section">
+    <div class="section-title">
+      <span class="section-num">02</span>
+      <h2>Escopo do Projeto</h2>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">2.1 Estrutura do Site</div>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">Home</div>
+          <p>Apresentação visual impactante com destaque para produtos, serviços e diferenciais da empresa.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Quem Somos</div>
+          <p>Espaço dedicado à história, missão e valores da marmoraria.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Catálogo de Produtos</div>
+          <p>Exibição organizada de mármores, granitos e serviços com imagens de alta qualidade.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Contato &amp; Instagram</div>
+          <p>Integração com WhatsApp, formulário de contato e publicações recentes do Instagram.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">2.2 Funcionalidades da Loja Online</div>
+      <ul class="feature-list">
+        <li>Visualização completa dos produtos disponíveis</li>
+        <li>Carrinho de compras integrado</li>
+        <li>Finalização de pedidos online</li>
+        <li>Integração com meios de pagamento seguros</li>
+        <li>Acompanhamento do status do pedido</li>
+        <li>Notificações automáticas ao cliente</li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">2.3 Painel Administrativo</div>
+      <ul class="feature-list">
+        <li>Cadastro, edição e exclusão de produtos</li>
+        <li>Atualização de preços, imagens e descrições</li>
+        <li>Controle e acompanhamento de pedidos</li>
+        <li>Visualização de pagamentos recebidos</li>
+        <li>Gestão de estoque em tempo real</li>
+        <li>Acesso por link seguro e exclusivo</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── 3. FUNCIONAMENTO ── -->
+  <div class="section">
+    <div class="section-title">
+      <span class="section-num">03</span>
+      <h2>Funcionamento da Solução</h2>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">Integração Total</div>
+        <p>Produtos cadastrados no painel são automaticamente exibidos no site em tempo real.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Gestão Centralizada</div>
+        <p>Pedidos, pagamentos e estoque centralizados em um único ambiente de fácil acesso.</p>
+      </div>
+    </div>
+    <br/>
+    <p class="body-text">
+      Apesar de envolver tecnologias modernas, a utilização será <strong style="color:var(--white)">simples, prática e intuitiva</strong> para o usuário final.
+    </p>
+  </div>
+
+  <div class="gold-line"></div>
+
+  <!-- ── 4. INVESTIMENTO ── -->
+  <div class="section">
+    <div class="section-title">
+      <span class="section-num">04</span>
+      <h2>Investimento</h2>
+    </div>
+    <div class="invest-grid">
+      <div class="invest-card highlight">
+        <div class="type">Pagamento Único</div>
+        <div class="label">Desenvolvimento Inicial</div>
+        <div class="price">R$ XXXX</div>
+        <div class="price-sub">Valor único</div>
+        <ul>
+          <li>Planejamento e estruturação</li>
+          <li>Design personalizado</li>
+          <li>Desenvolvimento completo</li>
+          <li>Configuração de pagamentos</li>
+          <li>Publicação da plataforma</li>
+        </ul>
+      </div>
+      <div class="invest-card">
+        <div class="type">Recorrente</div>
+        <div class="label">Manutenção Mensal</div>
+        <div class="price">R$ XXX</div>
+        <div class="price-sub">Por mês</div>
+        <ul>
+          <li>Hospedagem do sistema</li>
+          <li>Manutenção técnica e suporte</li>
+          <li>Atualizações e melhorias</li>
+          <li>Monitoramento contínuo</li>
+          <li>Backup e segurança de dados</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 5. BENEFÍCIOS ── -->
+  <div class="section">
+    <div class="section-title">
+      <span class="section-num">05</span>
+      <h2>Benefícios da Solução</h2>
+    </div>
+    <div class="benefits-strip">
+      <div class="benefit-item">
+        <div class="benefit-icon">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="8" cy="8" r="6.5" stroke="#c9a96e" stroke-width="1.2"/>
+            <path d="M8 1.5 Q11 8 8 14.5 Q5 8 8 1.5Z" stroke="#c9a96e" stroke-width="1" fill="rgba(201,169,110,0.1)"/>
+            <line x1="1.5" y1="8" x2="14.5" y2="8" stroke="#c9a96e" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="btitle">Visibilidade</div>
+        <div class="bdesc">Maior presença e alcance digital da marca</div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polyline points="2,12 6,7 9,10 14,4" stroke="#4dd9c0" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="11,4 14,4 14,7" stroke="#4dd9c0" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="btitle">Vendas</div>
+        <div class="bdesc">Aumento no potencial de conversão e receita</div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="8" cy="8" r="3" stroke="#c9a96e" stroke-width="1.2"/>
+            <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.42 1.42M11.53 11.53l1.42 1.42M11.53 4.47l1.42-1.42M3.05 12.95l1.42-1.42" stroke="#c9a96e" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="btitle">Autonomia</div>
+        <div class="bdesc">Gestão completa sem depender de terceiros</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 6. CONSIDERAÇÕES FINAIS ── -->
+  <div class="section">
+    <div class="section-title">
+      <span class="section-num">06</span>
+      <h2>Considerações Finais</h2>
+    </div>
+    <p class="body-text">
+      Esta proposta visa oferecer não apenas um site, mas uma <strong style="color:var(--white)">solução completa de presença digital e vendas</strong>, alinhada às necessidades da marmoraria e às exigências do mercado atual.
+    </p>
+    <br/>
+    <p class="body-text">
+      O objetivo é proporcionar uma ferramenta <strong style="color:var(--gold-light)">eficiente, moderna e escalável</strong>, contribuindo diretamente para o crescimento do negócio.
+    </p>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="footer-left">
+      <span class="flabel">Proposta Comercial</span>
+      Documento emitido em Março de 2026 · Confidencial
+      <div class="gold-rule"></div>
+    </div>
+    <div class="footer-right">
+      Válido por 30 dias a partir da emissão
+      <span class="femail">contato@suaempresa.com.br</span>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

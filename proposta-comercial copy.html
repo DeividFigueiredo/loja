@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proposta Comercial – Marmoraria</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Rajdhani:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #050a14;
+      --surface: #0b1424;
+      --surface2: #0f1e30;
+      --accent: #00c8ff;
+      --accent2: #7b2fff;
+      --gold: #d4af5a;
+      --text: #e0eaf5;
+      --muted: #6b8aaa;
+      --border: rgba(0, 200, 255, 0.18);
+      --glow: 0 0 24px rgba(0, 200, 255, 0.25);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* ── PAGE WRAPPER ── */
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 14mm 16mm 14mm 16mm;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ── BACKGROUND GRID ── */
+    .page::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0, 200, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 200, 255, 0.04) 1px, transparent 1px);
+      background-size: 30px 30px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── CORNER DECOR ── */
+    .corner {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      z-index: 1;
+    }
+    .corner--tl { top: 10mm; left: 10mm; border-top: 2px solid var(--accent); border-left: 2px solid var(--accent); }
+    .corner--tr { top: 10mm; right: 10mm; border-top: 2px solid var(--accent); border-right: 2px solid var(--accent); }
+    .corner--bl { bottom: 10mm; left: 10mm; border-bottom: 2px solid var(--accent); border-left: 2px solid var(--accent); }
+    .corner--br { bottom: 10mm; right: 10mm; border-bottom: 2px solid var(--accent); border-right: 2px solid var(--accent); }
+
+    /* ── HEADER ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 8mm;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--glow);
+      flex-shrink: 0;
+    }
+
+    .logo-icon svg {
+      width: 30px;
+      height: 30px;
+    }
+
+    .logo-text {
+      line-height: 1.2;
+    }
+
+    .logo-text .brand {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .logo-text .tagline {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .header-meta {
+      text-align: right;
+    }
+
+    .header-meta .doc-type {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 9px;
+      color: var(--muted);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .header-meta .doc-date {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* ── HERO TITLE ── */
+    .hero {
+      position: relative;
+      z-index: 2;
+      margin: 8mm 0 7mm;
+      padding: 7mm 8mm;
+      background: linear-gradient(120deg, rgba(0,200,255,0.07) 0%, rgba(123,47,255,0.07) 100%);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+    }
+
+    .hero .pre-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 9px;
+      color: var(--accent);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .hero h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .hero h1 span {
+      color: var(--accent);
+    }
+
+    .hero .subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+    }
+
+    .hero-badge {
+      position: absolute;
+      right: 8mm;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      border: 1.5px solid var(--accent);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 7px;
+      letter-spacing: 1px;
+      text-align: center;
+      opacity: 0.7;
+    }
+
+    .hero-badge .year { font-size: 14px; font-weight: 800; letter-spacing: 0; }
+
+    /* ── SECTION ── */
+    .section {
+      position: relative;
+      z-index: 2;
+      margin-bottom: 7mm;
+      page-break-inside: avoid;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4mm;
+    }
+
+    .section-num {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 9px;
+      color: var(--accent);
+      background: rgba(0,200,255,0.1);
+      border: 1px solid var(--border);
+      padding: 2px 7px;
+      border-radius: 3px;
+      letter-spacing: 1px;
+      flex-shrink: 0;
+    }
+
+    .section-title h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+
+    /* ── TEXT BODY ── */
+    .body-text {
+      font-size: 13px;
+      color: #b8cce0;
+      line-height: 1.8;
+    }
+
+    /* ── SUBSECTION ── */
+    .subsection {
+      margin: 4mm 0;
+    }
+
+    .subsection-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 3mm;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .subsection-title::before {
+      content: '';
+      display: inline-block;
+      width: 14px;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    /* ── CARD GRID ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3mm;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 4mm 5mm;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+    }
+
+    .card .card-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 2mm;
+    }
+
+    .card p {
+      font-size: 12px;
+      color: #8aaac8;
+      line-height: 1.6;
+    }
+
+    /* ── FEATURE LIST ── */
+    .feature-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2mm 4mm;
+    }
+
+    .feature-list.single { grid-template-columns: 1fr; }
+
+    .feature-list li {
+      font-size: 12.5px;
+      color: #b8cce0;
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      line-height: 1.5;
+    }
+
+    .feature-list li::before {
+      content: '▹';
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 1px;
+      font-size: 11px;
+    }
+
+    /* ── INVESTMENT CARDS ── */
+    .invest-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4mm;
+    }
+
+    .invest-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 5mm 6mm;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .invest-card.highlight {
+      border-color: rgba(0,200,255,0.4);
+      box-shadow: var(--glow);
+    }
+
+    .invest-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 60px; height: 60px;
+      background: radial-gradient(circle, rgba(0,200,255,0.08), transparent 70%);
+    }
+
+    .invest-card .type {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 8px;
+      color: var(--muted);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 3mm;
+    }
+
+    .invest-card .label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 3mm;
+    }
+
+    .invest-card .price {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 3mm;
+    }
+
+    .invest-card .price-sub {
+      font-size: 10px;
+      color: var(--muted);
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 1px;
+    }
+
+    .invest-card ul {
+      list-style: none;
+      margin-top: 3mm;
+    }
+
+    .invest-card ul li {
+      font-size: 11.5px;
+      color: #8aaac8;
+      padding: 1px 0;
+      display: flex;
+      gap: 6px;
+    }
+
+    .invest-card ul li::before {
+      content: '·';
+      color: var(--accent);
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    /* ── BENEFITS STRIP ── */
+    .benefits-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3mm;
+    }
+
+    .benefit-item {
+      text-align: center;
+      padding: 4mm 3mm;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .benefit-item .icon {
+      font-size: 20px;
+      margin-bottom: 2mm;
+      display: block;
+    }
+
+    .benefit-item .title {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .benefit-item .desc {
+      font-size: 11px;
+      color: #7a9ab8;
+      line-height: 1.4;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      position: relative;
+      z-index: 2;
+      margin-top: 8mm;
+      padding-top: 5mm;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-left {
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .footer-left strong {
+      color: var(--accent);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 9px;
+      letter-spacing: 1px;
+    }
+
+    .footer-right {
+      font-size: 10px;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .scan-line {
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      margin-top: 3px;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 5mm 0;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      body { background: var(--bg); }
+      .page { margin: 0; padding: 12mm 14mm; }
+    }
+
+    @page {
+      size: A4;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Corner decorations -->
+  <div class="corner corner--tl"></div>
+  <div class="corner corner--tr"></div>
+  <div class="corner corner--bl"></div>
+  <div class="corner corner--br"></div>
+
+  <!-- ── HEADER ── -->
+  <header class="header">
+    <div class="logo-box">
+      <div class="logo-icon">
+        <!-- Placeholder logo – substitua pela sua imagem -->
+        <svg viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="15,2 28,9 28,21 15,28 2,21 2,9" stroke="white" stroke-width="1.5" fill="none"/>
+          <polygon points="15,7 23,11 23,19 15,23 7,19 7,11" fill="rgba(255,255,255,0.15)" stroke="white" stroke-width="1"/>
+          <circle cx="15" cy="15" r="3" fill="white"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <div class="brand">Dwalt tech</div>
+        <div class="tagline">Soluções Digitais Avançadas</div>
+      </div>
+    </div>
+    <div class="header-meta">
+
+      <div class="doc-date">Março / 2026</div>
+    </div>
+  </header>
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="pre-label">Proposta Comercial</div>
+    <h1>Desenvolvimento de Site &<br/><span>Loja Online</span></h1>
+    <div class="subtitle">Solução digital completa para Marmoraria Guandu</div>
+    <div class="hero-badge">
+      <span class="year">2026</span>
+      <span>DIGITAL</span>
+    </div>
+  </div>
+
+  <!-- ── 1. APRESENTAÇÃO ── -->
+  <div class="section">
+    <div class="section-title">
+      <span class="section-num">01</span>
+      <h2>Apresentação</h2>
+    </div>
+    <p class="body-text">
+      A presente proposta tem como objetivo o desenvolvimento de um <strong style="color:#fff">site institucional integrado a uma loja online</strong>, voltado para atender às necessidades da marmoraria, proporcionando maior visibilidade digital, organização dos processos comerciais e ampliação das oportunidades de venda.
+    </p>
+    <br/>
+    <p class="body-text">
+      A solução será projetada com foco em <strong style="color:var(--accent)">design moderno, usabilidade, performance e conversão de clientes</strong>, garantindo uma presença digital profissional e alinhada ao mercado atual.
+    </p>
+  </div>
+
+  <!-- ── 2. ESCOPO ── -->
+  <div class="section">
+    <div class="section-title">
+      <span class="section-num">02</span>
+      <h2>Escopo do Projeto</h2>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">2.1 Estrutura do Site</div>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">Home</div>
+          <p>Apresentação visual impactante com destaque para produtos, serviços e diferenciais da empresa.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Quem Somos</div>
+          <p>Espaço dedicado à história, missão e valores da marmoraria.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Catálogo de Produtos</div>
+          <p>Exibição organizada de mármores, granitos e serviços com imagens de alta qualidade.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Contato & Instagram</div>
+          <p>Integração com WhatsApp, formulário de contato e publicações recentes do Instagram.</p>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="subsection">
+      <div class="subsection-title">2.2 Funcionalidades da Loja Online</div>
+      <ul class="feature-list">
+        <li>Visualização completa dos produtos disponíveis</li>
+        <li>Carrinho de compras integrado</li>
+        <li>Finalização de pedidos online</li>
+        <li>Integração com meios de pagamento seguros</li>
+        <li>Acompanhamento do status do pedido</li>
+        <li>Notificações automáticas ao cliente</li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">2.3 Painel Administrativo</div>
+      <ul class="feature-list">
+        <li>Cadastro, edição e exclusão de produtos</li>
+        <li>Atualização de preços, imagens e descrições</li>
+        <li>Controle e acompanhamento de pedidos</li>
+        <li>Visualização de pagamentos recebidos</li>
+        <li>Gestão de estoque em tempo real</li>
+        <li>Acesso por link seguro e exclusivo</li>
+      </ul>
+    </div>
+  </div>
+
+  <br/><br/><br/>
+
+  <!-- ── 3. FUNCIONAMENTO ── -->
+  <div class="section">
+    <div class="section-title">
+      <span class="section-num">03</span>
+      <h2>Funcionamento da Solução</h2>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">Integração Total</div>
+        <p>Produtos cadastrados no painel são automaticamente exibidos no site em tempo real.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Gestão Centralizada</div>
+        <p>Pedidos, pagamentos e estoque centralizados em um único ambiente de fácil acesso.</p>
+      </div>
+    </div>
+    <br/>
+    <p class="body-text">
+      Apesar de envolver tecnologias modernas no desenvolvimento, a utilização será <strong style="color:#fff">simples, prática e intuitiva</strong> para o usuário final.
+    </p>
+  </div>
+
+  <!-- ── 4. INVESTIMENTO ── -->
+  <div class="section">
+    <div class="section-title">
+      <span class="section-num">04</span>
+      <h2>Investimento</h2>
+    </div>
+    <div class="invest-grid">
+      <div class="invest-card highlight">
+        <div class="type">Pagamento Único</div>
+        <div class="label">Desenvolvimento Inicial</div>
+        <div class="price">R$ 5.500</div>
+        <div class="price-sub">50% no início · 50% na entrega</div>
+        <ul>
+          <li>Planejamento e estruturação</li>
+          <li>Design personalizado</li>
+          <li>Desenvolvimento completo</li>
+          <li>Configuração de pagamentos</li>
+          <li>Publicação da plataforma</li>
+        </ul>
+      </div>
+      <div class="invest-card">
+        <div class="type">Recorrente</div>
+        <div class="label">Suporte &amp; Manutenção Mensal</div>
+        <div class="price">R$ 450</div>
+        <div class="price-sub">Por mês</div>
+        <ul>
+          <li>Hospedagem do sistema</li>
+          <li>Suporte online 24h (resposta em até 24 horas)</li>
+          <li>Até 3 ajustes mensais inclusos no site*</li>
+          <li>Ajustes adicionais e solicitações maiores sob orçamento</li>
+          <li>Monitoramento contínuo</li>
+          <li>Backup e segurança de dados</li>
+        </ul>
+        <div style="margin-top: 2.2mm; font-size: 10.5px; color: #8aaac8; line-height: 1.5;">
+          *Ajustes simples: textos, imagens e pequenas alterações visuais. Novas páginas ou funcionalidades serão orçadas separadamente.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 5. BENEFÍCIOS ── -->
+  <div class="section">
+    <div class="section-title">
+      <span class="section-num">05</span>
+      <h2>Benefícios da Solução</h2>
+    </div>
+    <div class="benefits-strip">
+      <div class="benefit-item">
+        <span class="icon">🌐</span>
+        <div class="title">Visibilidade</div>
+        <div class="desc">Maior presença e alcance digital da marca</div>
+      </div>
+      <div class="benefit-item">
+        <span class="icon">📈</span>
+        <div class="title">Vendas</div>
+        <div class="desc">Aumento no potencial de conversão e receita</div>
+      </div>
+      <div class="benefit-item">
+        <span class="icon">⚙️</span>
+        <div class="title">Autonomia</div>
+        <div class="desc">Gestão completa sem depender de terceiros</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 6. CONSIDERAÇÕES FINAIS ── -->
+  <div class="section">
+    <div class="section-title">
+      <span class="section-num">06</span>
+      <h2>Considerações Finais</h2>
+    </div>
+    <p class="body-text">
+      Esta proposta visa oferecer não apenas um site, mas uma <strong style="color:#fff">solução completa de presença digital e vendas</strong>, alinhada às necessidades da marmoraria e às exigências do mercado atual.
+    </p>
+    <br/>
+    <p class="body-text">
+      O objetivo é proporcionar uma ferramenta <strong style="color:var(--accent)">eficiente, moderna e escalável</strong>, contribuindo diretamente para o crescimento do negócio.
+    </p>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="footer-left">
+      <strong>PROPOSTA COMERCIAL</strong><br/>
+      Documento gerado em Março de 2026 
+      <div class="scan-line"></div>
+    </div>
+    <div class="footer-right">
+    
+      <span style="color: var(--accent); font-family: 'Orbitron', sans-serif; font-size: 9px; letter-spacing: 1px;">dwalt@gmail.com</span>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "name": "lojavirtual",
+  "private": true,
+  "description": "Monorepo LojaVirtual: gateway (3000) + backend Medusa (9000) + frontend (5000).",
+  "scripts": {
+    "gateway": "cd gateway && npm start",
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd frontend && npm start"
+  }
+}

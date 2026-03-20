@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proposta Comercial – Marmoraria</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --marble-base:   #f8f5ef;
+      --marble-light:  #fdfbf8;
+      --surface:       #ffffff;
+      --surface2:      #f3ede5;
+      --gold:          #b8924a;
+      --gold-light:    #d4af70;
+      --gold-dark:     #7d5c2a;
+      --charcoal:      #1e1c1a;
+      --dark:          #2e2b27;
+      --text:          #3d3a35;
+      --muted:         #8a8279;
+      --border:        rgba(184,146,74,0.22);
+      --border-light:  rgba(184,146,74,0.12);
+      --shadow:        0 2px 16px rgba(100,80,40,0.10);
+      --shadow-lg:     0 6px 30px rgba(100,80,40,0.14);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      background: #e8e2d8;
+    }
+
+    /* ── MARBLE BACKGROUND ── */
+    .marble-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background:
+        repeating-linear-gradient(
+          128deg,
+          transparent 0px, transparent 46px,
+          rgba(155,138,118,0.10) 46px, rgba(155,138,118,0.10) 47px,
+          transparent 47px, transparent 94px,
+          rgba(130,118,102,0.07) 94px, rgba(130,118,102,0.07) 95px,
+          transparent 95px, transparent 138px,
+          rgba(170,155,132,0.06) 138px, rgba(170,155,132,0.06) 139px,
+          transparent 139px
+        ),
+        repeating-linear-gradient(
+          52deg,
+          transparent 0px, transparent 78px,
+          rgba(175,158,136,0.07) 78px, rgba(175,158,136,0.07) 79px,
+          transparent 79px, transparent 160px,
+          rgba(145,132,112,0.05) 160px, rgba(145,132,112,0.05) 161px,
+          transparent 161px
+        ),
+        repeating-linear-gradient(
+          96deg,
+          transparent 0px, transparent 120px,
+          rgba(160,145,125,0.06) 120px, rgba(160,145,125,0.06) 121px,
+          transparent 121px
+        ),
+        linear-gradient(155deg, #faf7f2 0%, #f3ece0 40%, #f8f3ec 70%, #f5f0e8 100%);
+    }
+
+    /* ── PAGE WRAPPER ── */
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 11mm 14mm 11mm 14mm;
+      position: relative;
+      z-index: 1;
+      background:
+        repeating-linear-gradient(
+          128deg,
+          transparent 0px, transparent 46px,
+          rgba(155,138,118,0.09) 46px, rgba(155,138,118,0.09) 47px,
+          transparent 47px, transparent 94px,
+          rgba(130,118,102,0.06) 94px, rgba(130,118,102,0.06) 95px,
+          transparent 95px
+        ),
+        repeating-linear-gradient(
+          52deg,
+          transparent 0px, transparent 78px,
+          rgba(175,158,136,0.06) 78px, rgba(175,158,136,0.06) 79px,
+          transparent 79px
+        ),
+        linear-gradient(155deg, #faf7f2 0%, #f4ede2 45%, #f9f4ed 100%);
+    }
+
+    /* ── GOLD BORDER FRAME ── */
+    .page::before {
+      content: '';
+      position: absolute;
+      inset: 8mm;
+      border: 1px solid var(--border);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── CORNER ORNAMENTS ── */
+    .corner {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      z-index: 3;
+    }
+    .corner--tl { top: 7.5mm; left: 7.5mm;  border-top: 2px solid var(--gold); border-left: 2px solid var(--gold); }
+    .corner--tr { top: 7.5mm; right: 7.5mm; border-top: 2px solid var(--gold); border-right: 2px solid var(--gold); }
+    .corner--bl { bottom: 7.5mm; left: 7.5mm;  border-bottom: 2px solid var(--gold); border-left: 2px solid var(--gold); }
+    .corner--br { bottom: 7.5mm; right: 7.5mm; border-bottom: 2px solid var(--gold); border-right: 2px solid var(--gold); }
+
+    /* ── HEADER ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 7mm;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo-box {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .logo-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(145deg, var(--gold-light), var(--gold-dark));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 3px 14px rgba(184,146,74,0.35);
+      flex-shrink: 0;
+    }
+
+    .logo-icon svg { width: 28px; height: 28px; }
+
+    .logo-text { line-height: 1.25; }
+
+    .logo-text .brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--charcoal);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .logo-text .tagline {
+      font-size: 9px;
+      color: var(--gold);
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .header-meta { text-align: right; }
+
+    .header-meta .doc-type {
+      font-size: 8.5px;
+      color: var(--muted);
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+      font-weight: 600;
+    }
+
+    .header-meta .doc-date {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      color: var(--gold-dark);
+      font-style: italic;
+    }
+
+    /* ── GOLD LINE DIVIDER ── */
+    .gold-line {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-light), var(--gold), var(--gold-light), transparent);
+      margin: 2mm 0;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      z-index: 2;
+      margin: 4mm 0 4mm;
+      padding: 7mm 8mm 7mm 10mm;
+      background: linear-gradient(130deg, rgba(255,251,244,0.9) 0%, rgba(243,237,226,0.8) 100%);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--gold);
+      border-radius: 6px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -10px; top: -10px;
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(184,146,74,0.10), transparent 70%);
+    }
+
+    .hero .pre-label {
+      font-size: 8.5px;
+      color: var(--gold);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--charcoal);
+      line-height: 1.15;
+      margin-bottom: 5px;
+    }
+
+    .hero h1 em {
+      color: var(--gold-dark);
+      font-style: italic;
+    }
+
+    .hero .subtitle {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+    }
+
+    .hero-badge {
+      position: absolute;
+      right: 8mm;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: rgba(255,251,244,0.7);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 8px;
+      letter-spacing: 1.5px;
+      text-align: center;
+    }
+
+    .hero-badge .year {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0;
+      line-height: 1.1;
+      display: block;
+    }
+
+    /* ── SECTION ── */
+    .section {
+      position: relative;
+      z-index: 2;
+      margin-bottom: 5mm;
+      page-break-inside: avoid;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4mm;
+    }
+
+    .section-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10px;
+      color: var(--surface);
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      padding: 2px 8px;
+      border-radius: 3px;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .section-title h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--charcoal);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+
+    /* ── BODY TEXT ── */
+    .body-text {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.85;
+    }
+
+    /* ── SUBSECTION ── */
+    .subsection { margin: 3mm 0; }
+
+    .subsection-title {
+      font-family: 'Raleway', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gold-dark);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 3mm;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .subsection-title::before {
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 1.5px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      border-radius: 2px;
+    }
+
+    /* ── CARD GRID ── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3mm;
+    }
+
+    .card {
+      background: rgba(255,252,247,0.9);
+      border: 1px solid var(--border-light);
+      border-top: 2px solid var(--gold-light);
+      border-radius: 6px;
+      padding: 4mm 5mm;
+      position: relative;
+      box-shadow: 0 1px 8px rgba(100,80,40,0.07);
+    }
+
+    .card .card-title {
+      font-family: 'Raleway', sans-serif;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--gold-dark);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 2mm;
+    }
+
+    .card p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── FEATURE LIST ── */
+    .feature-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5mm 5mm;
+    }
+
+    .feature-list.single { grid-template-columns: 1fr; }
+
+    .feature-list li {
+      font-size: 12.5px;
+      color: var(--text);
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      line-height: 1.55;
+    }
+
+    .feature-list li::before {
+      content: '◆';
+      color: var(--gold);
+      flex-shrink: 0;
+      margin-top: 2px;
+      font-size: 7px;
+    }
+
+    /* ── INVESTMENT CARDS ── */
+    .invest-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4mm;
+    }
+
+    .invest-card {
+      background: rgba(255,253,248,0.95);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 5mm 6mm;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .invest-card.highlight {
+      border-color: var(--border);
+      background: linear-gradient(145deg, rgba(255,252,244,0.98) 0%, rgba(248,240,226,0.98) 100%);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .invest-card.highlight::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 3px;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold-dark));
+    }
+
+    .invest-card .type {
+      font-size: 8px;
+      color: var(--muted);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 3mm;
+    }
+
+    .invest-card .label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 3mm;
+    }
+
+    .invest-card .price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--gold-dark);
+      line-height: 1;
+      margin-bottom: 2mm;
+    }
+
+    .invest-card .price-sub {
+      font-size: 9px;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 3mm;
+    }
+
+    .invest-card ul {
+      list-style: none;
+      border-top: 1px solid var(--border-light);
+      padding-top: 3mm;
+    }
+
+    .invest-card ul li {
+      font-size: 11.5px;
+      color: var(--muted);
+      padding: 1px 0;
+      display: flex;
+      gap: 7px;
+      align-items: flex-start;
+    }
+
+    .invest-card ul li::before {
+      content: '–';
+      color: var(--gold);
+      flex-shrink: 0;
+      line-height: 1.6;
+    }
+
+    /* ── BENEFITS ── */
+    .benefits-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3mm;
+    }
+
+    .benefit-item {
+      text-align: center;
+      padding: 2.5mm 3mm;
+      background: rgba(255,252,247,0.9);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      box-shadow: 0 1px 6px rgba(100,80,40,0.07);
+    }
+
+    .benefit-icon {
+      width: 34px;
+      height: 34px;
+      margin: 0 auto 2mm;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(184,146,74,0.12), rgba(184,146,74,0.06));
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .benefit-icon svg { width: 16px; height: 16px; }
+
+    .benefit-item .btitle {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--gold-dark);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .benefit-item .bdesc {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      position: relative;
+      z-index: 2;
+      margin-top: 5mm;
+      padding-top: 4mm;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .footer-left {
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .footer-left .flabel {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gold-dark);
+      letter-spacing: 1px;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .footer-right {
+      font-size: 10px;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .footer-right .femail {
+      display: block;
+      color: var(--gold-dark);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    .gold-rule {
+      width: 60px;
+      height: 1.5px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin-top: 4px;
+    }
+
+    /* ── MARBLE VEIN ACCENT ── */
+    .vein-accent {
+      position: absolute;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.4;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      body { background: #f8f5ef; }
+      .marble-bg { display: none; }
+      .page { margin: 0; padding: 11mm 14mm; }
+    }
+
+    @page { size: A4; margin: 0; }
+  </style>
+</head>
+<body>
+<div class="marble-bg"></div>
+<div class="page">
+
+  <!-- Gold frame corners -->
+  <div class="corner corner--tl"></div>
+  <div class="corner corner--tr"></div>
+  <div class="corner corner--bl"></div>
+  <div class="corner corner--br"></div>
+
+  <!-- ── HEADER ── -->
+  <header class="header">
+    <div class="logo-box">
+      <div class="logo-icon">
+        <!-- Placeholder logo – substitua por <img src="logo.png" /> -->
+        <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="14,2 26,8 26,20 14,26 2,20 2,8" stroke="rgba(255,255,255,0.9)" stroke-width="1.5" fill="none"/>
+          <polygon points="14,6 22,10 22,18 14,22 6,18 6,10" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+          <circle cx="14" cy="14" r="3" fill="white"/>
+          <line x1="14" y1="6" x2="14" y2="2" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+          <line x1="14" y1="22" x2="14" y2="26" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <div class="brand">Dwalt tech</div>
+        <div class="tagline">Soluções Digitais Avançadas</div>
+      </div>
+    </div>
+    <div class="header-meta">
+     
+      <div class="doc-date">Março de 2026</div>
+    </div>
+  </header>
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="pre-label">Proposta Comercial</div>
+    <h1>Desenvolvimento de Site &amp;<br/><em>Loja Online</em></h1>
+    <div class="subtitle">Solução digital completa para Marmoraria Guandu</div>
+    <div class="hero-badge">
+      <span class="year">2026</span>
+      <span style="font-size:7px;letter-spacing:2px;font-family:'Raleway',sans-serif;font-weight:700;">DIGITAL</span>
+    </div>
+  </div>
+
+  <div class="gold-line"></div>
+
+  <!-- ── 1. APRESENTAÇÃO ── -->
+  <div class="section">
+    <div class="section-title">
+      <span class="section-num">01</span>
+      <h2>Apresentação</h2>
+    </div>
+    <p class="body-text">
+      A presente proposta tem como objetivo o desenvolvimento de um <strong style="color:var(--charcoal)">site institucional integrado a uma loja online</strong>, voltado para atender às necessidades da marmoraria, proporcionando maior visibilidade digital, organização dos processos comerciais e ampliação das oportunidades de venda.
+    </p>
+    <br/>
+    <p class="body-text">
+      A solução será projetada com foco em <strong style="color:var(--gold-dark)">design moderno, usabilidade, performance e conversão de clientes</strong>, garantindo uma presença digital profissional e alinhada ao mercado atual.
+    </p>
+  </div>
+
+  <!-- ── 2. ESCOPO ── -->
+  <div class="section">
+    <div class="section-title">
+      <span class="section-num">02</span>
+      <h2>Escopo do Projeto</h2>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">2.1 Estrutura do Site</div>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">Home</div>
+          <p>Apresentação visual impactante com destaque para produtos, serviços e diferenciais da empresa.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Quem Somos</div>
+          <p>Espaço dedicado à história, missão e valores da marmoraria.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Catálogo de Produtos</div>
+          <p>Exibição organizada de mármores, granitos e serviços com imagens de alta qualidade.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Contato &amp; Instagram</div>
+          <p>Integração com WhatsApp, formulário de contato e publicações recentes do Instagram.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">2.2 Funcionalidades da Loja Online</div>
+      <ul class="feature-list">
+        <li>Visualização completa dos produtos disponíveis</li>
+        <li>Carrinho de compras integrado</li>
+        <li>Finalização de pedidos online</li>
+        <li>Integração com meios de pagamento seguros</li>
+        <li>Acompanhamento do status do pedido</li>
+        <li>Notificações automáticas ao cliente</li>
+      </ul>
+    </div>
+
+    <div class="subsection">
+      <div class="subsection-title">2.3 Painel Administrativo</div>
+      <ul class="feature-list">
+        <li>Cadastro, edição e exclusão de produtos</li>
+        <li>Atualização de preços, imagens e descrições</li>
+        <li>Controle e acompanhamento de pedidos</li>
+        <li>Visualização de pagamentos recebidos</li>
+        <li>Gestão de estoque em tempo real</li>
+        <li>Acesso por link seguro e exclusivo</li>
+      </ul>
+    </div>
+    <br/>
+  </div>
+  <br/><br/><br/>
+  <!-- ── 3. FUNCIONAMENTO ── -->
+  <div class="section">
+    <div class="section-title">
+      <span class="section-num">03</span>
+      <h2>Funcionamento da Solução</h2>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">Integração Total</div>
+        <p>Produtos cadastrados no painel são automaticamente exibidos no site em tempo real.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Gestão Centralizada</div>
+      </div>
+    </div>
+    <br/>
+    <p class="body-text">
+      Apesar de envolver tecnologias modernas no desenvolvimento, a utilização será <strong style="color:var(--charcoal)">simples, prática e intuitiva</strong> para o usuário final.
+    </p>
+  </div>
+
+  <div class="gold-line"></div>
+
+  <!-- ── 4. INVESTIMENTO ── -->
+  <div class="section">
+    <div class="section-title">
+      <span class="section-num">04</span>
+      <h2>Investimento</h2>
+    </div>
+    <div class="invest-grid">
+      <div class="invest-card highlight">
+        <div class="type">Pagamento Único</div>
+        <div class="label">Desenvolvimento Inicial</div>
+        <div class="price">R$ 5.500</div>
+        <div class="price-sub">50% no início · 50% na entrega</div>
+        <ul>
+          <li>Planejamento e estruturação</li>
+          <li>Design personalizado</li>
+          <li>Desenvolvimento completo</li>
+          <li>Configuração de pagamentos</li>
+          <li>Publicação da plataforma</li>
+        </ul>
+      </div>
+      <div class="invest-card">
+        <div class="type">Recorrente</div>
+        <div class="label">Suporte &amp; Manutenção Mensal</div>
+        <div class="price">R$ 450</div>
+        <div class="price-sub">Por mês</div>
+        <ul>
+          <li>Hospedagem do sistema</li>
+          <li>Suporte online 24h (resposta em até 24 horas)</li>
+          <li>Até 3 ajustes mensais inclusos no site*</li>
+          <li>Ajustes adicionais e solicitações maiores sob orçamento</li>
+          <li>Monitoramento contínuo</li>
+          <li>Backup e segurança de dados</li>
+        </ul>
+        <div style="margin-top: 2.2mm; font-size: 10.5px; color: var(--muted); line-height: 1.5;">
+          *Ajustes simples: textos, imagens e pequenas alterações visuais. Novas páginas ou funcionalidades serão orçadas separadamente.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 5. BENEFÍCIOS ── -->
+  <div class="section">
+    <div class="section-title">
+      <span class="section-num">05</span>
+      <h2>Benefícios da Solução</h2>
+    </div>
+    <div class="benefits-strip">
+      <div class="benefit-item">
+        <div class="benefit-icon">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="8" cy="8" r="6.5" stroke="#b8924a" stroke-width="1.2"/>
+            <path d="M8 1.5 Q11 8 8 14.5 Q5 8 8 1.5Z" stroke="#b8924a" stroke-width="1" fill="rgba(184,146,74,0.1)"/>
+            <line x1="1.5" y1="8" x2="14.5" y2="8" stroke="#b8924a" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="btitle">Visibilidade</div>
+        <div class="bdesc">Maior presença e alcance digital da marca</div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polyline points="2,12 6,7 9,10 14,4" stroke="#b8924a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="11,4 14,4 14,7" stroke="#b8924a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="btitle">Vendas</div>
+        <div class="bdesc">Aumento no potencial de conversão e receita</div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="8" cy="8" r="3" stroke="#b8924a" stroke-width="1.2"/>
+            <path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.42 1.42M11.53 11.53l1.42 1.42M11.53 4.47l1.42-1.42M3.05 12.95l1.42-1.42" stroke="#b8924a" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="btitle">Autonomia</div>
+        <div class="bdesc">Gestão completa sem depender de terceiros</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 6. CONSIDERAÇÕES FINAIS ── -->
+  <div class="section">
+    <div class="section-title">
+      <span class="section-num">06</span>
+      <h2>Considerações Finais</h2>
+    </div>
+    <p class="body-text">
+      Esta proposta visa oferecer não apenas um site, mas uma <strong style="color:var(--charcoal)">solução completa de presença digital e vendas</strong>, alinhada às necessidades da marmoraria e às exigências do mercado atual.
+      
+      O objetivo é proporcionar uma ferramenta <strong style="color:var(--gold-dark)">eficiente, moderna e escalável</strong>, contribuindo diretamente para o crescimento do negócio.
+    </p>
+  </div>
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="footer-left">
+      <span class="flabel">Proposta Comercial</span>
+      Documento emitido em Março de 2026 · Confidencial
+      <div class="gold-rule"></div>
+    </div>
+    <div class="footer-right">
+      Válido por 30 dias a partir da emissão
+      <span class="femail">dwalt@gmail.com</span>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
