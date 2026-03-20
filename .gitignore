@@ -1,2 +1,99 @@
-.env
+# ========== Dependências ==========
 node_modules/
+.pnp
+.pnp.js
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+# Mantém Yarn Berry configurável no repo (se usar):
+# !.yarn/patches
+# !.yarn/plugins
+# !.yarn/releases
+# !.yarn/sdks
+# !.yarn/versions
+
+# ========== Variáveis de ambiente (nunca commitar segredos) ==========
+.env
+.env.*
+!.env.example
+
+# ========== Build / saída ==========
+dist/
+dist-ssr/
+build/
+out/
+.next/
+.nuxt/
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# ========== Logs & debug ==========
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ========== Testes & cobertura ==========
+coverage/
+.nyc_output/
+*.lcov
+
+# ========== Cache & ferramentas ==========
+.cache/
+.parcel-cache/
+.turbo/
+.eslintcache
+.stylelintcache
+*.pem
+
+# ========== Medusa (backend) ==========
+.medusa/
+uploads/
+medusa-db.sql
+*.sqlite
+*.db
+
+# ========== SO ==========
+.DS_Store
+.DS_Store?
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ========== IDEs / editores ==========
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# VS Code — mantém só o que o time quiser compartilhar
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# ========== Vite / frontends ==========
+*.local
+
+# ========== Temporários & backups ==========
+tmp/
+temp/
+*.tmp
+*.bak
+*.backup
+*~
+
+# ========== Documentação gerada / artefatos locais ==========
+*.zip
+*.tar.gz
