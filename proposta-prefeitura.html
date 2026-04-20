@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proposta Comercial — Dwalt</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f3f6fb;
+    --surface: #ffffff;
+    --surface-soft: #eef3fb;
+    --primary: #0f4c81;
+    --primary-light: #2e6ea3;
+    --primary-soft: #dceaf8;
+    --text: #1d2b3a;
+    --text-muted: #58697d;
+    --border: #cfd9e5;
+    --accent: #f0a94c;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 44px;
+    position: relative;
+    z-index: 1;
+    background: var(--surface);
+    box-shadow: 0 22px 50px rgba(15, 76, 129, 0.12);
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    padding: 60px 0 50px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .logo-block .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .logo-block .logo span {
+    color: var(--primary);
+  }
+
+  .logo-block .tagline {
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  .doc-meta {
+    text-align: right;
+  }
+
+  .doc-meta .doc-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 4px;
+  }
+
+  .doc-meta .doc-date {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  /* ─── HERO SECTION ─── */
+  .hero {
+    padding: 80px 0 60px;
+    position: relative;
+  }
+
+  .hero::after {
+    
+    position: absolute;
+    right: -20px;
+    top: 50px;
+    font-family: 'Syne', sans-serif;
+    font-size: 9rem;
+    font-weight: 800;
+    color: transparent;
+    -webkit-text-stroke: 1px #d9e4f0;
+    letter-spacing: -0.05em;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .hero .eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    max-width: 680px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--primary);
+  }
+
+  .hero .intro {
+    margin-top: 28px;
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 540px;
+    line-height: 1.8;
+  }
+
+  /* ─── GOLD DIVIDER ─── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 56px 0;
+  }
+
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border));
+  }
+
+  .divider::before {
+    background: linear-gradient(to right, var(--border), transparent);
+  }
+
+  .divider .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary);
+  }
+
+  /* ─── SECTION TITLES ─── */
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 32px;
+  }
+
+  /* ─── SCOPE CARDS ─── */
+  .scope-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-bottom: 56px;
+  }
+
+  .scope-card {
+    background: var(--surface-soft);
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s, transform 0.3s;
+    border: 1px solid var(--border);
+  }
+
+  .scope-card:hover {
+    background: #e7f0fb;
+    transform: translateY(-2px);
+  }
+
+  .scope-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--primary);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .scope-card:hover::before {
+    opacity: 1;
+  }
+
+  .scope-card .num {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--primary-light);
+    margin-bottom: 14px;
+  }
+
+  .scope-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+  }
+
+  .scope-card p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .scope-card .tag {
+    display: inline-block;
+    margin-top: 16px;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--primary);
+    border: 1px solid var(--primary-light);
+    padding: 4px 10px;
+    border-radius: 2px;
+    background: rgba(46, 110, 163, 0.08);
+  }
+
+  /* ─── DELIVERABLES LIST ─── */
+  .deliverables {
+    margin-bottom: 56px;
+  }
+
+  .deliverable-item {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+
+  .deliverable-item:last-child {
+    border-bottom: none;
+  }
+
+  .deliverable-item .check {
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--primary-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .deliverable-item .check svg {
+    width: 12px;
+    height: 12px;
+    stroke: var(--primary);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .deliverable-item .content h4 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+  }
+
+  .deliverable-item .content p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ─── DISCLAIMER BOX ─── */
+  .disclaimer {
+    background: #f6f9fd;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--primary);
+    padding: 28px 32px;
+    margin-bottom: 56px;
+  }
+
+  .disclaimer .disclaimer-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 12px;
+  }
+
+  .disclaimer p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+  }
+
+  .disclaimer strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ─── PRICING ─── */
+  .pricing-block {
+    background: linear-gradient(135deg, #f8fbff 0%, #edf4fc 100%);
+    border: 1px solid var(--border);
+    padding: 50px;
+    margin-bottom: 56px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pricing-block::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(15, 76, 129, 0.11) 0%, transparent 70%);
+  }
+
+  .pricing-block .price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .pricing-block .price-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 12px;
+  }
+
+  .pricing-block .price-value {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    color: var(--text);
+  }
+
+  .pricing-block .price-value span {
+    font-size: 1.5rem;
+    color: var(--primary);
+    vertical-align: top;
+    margin-top: 8px;
+    display: inline-block;
+    font-weight: 400;
+  }
+
+  .pricing-block .price-note {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    max-width: 260px;
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  .pricing-block .price-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 28px 0;
+  }
+
+  .pricing-block .payment-info {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+
+  .pricing-block .payment-info strong {
+    color: var(--text);
+  }
+
+  /* ─── TIMELINE ─── */
+  .timeline {
+    margin-bottom: 56px;
+  }
+
+  .timeline-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+  }
+
+  .timeline-row:last-child { border-bottom: none; }
+
+  .timeline-row .phase {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--primary);
+  }
+
+  .timeline-row .desc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+
+  .timeline-row .desc strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 48px 0 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+
+  footer .footer-block .label {
+    font-size: 0.62rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 12px;
+  }
+
+  footer .footer-block p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  footer .footer-block strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .validity-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(15, 76, 129, 0.08);
+    border: 1px solid rgba(15, 76, 129, 0.25);
+    padding: 8px 16px;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-top: 16px;
+  }
+
+  .validity-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary);
+    flex-shrink: 0;
+  }
+
+  /* ─── PRINT ─── */
+  @media print {
+    body { background: #fff; color: #111; }
+    .hero::after { display: none; }
+    .page { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo-block">
+      <div class="logo">dw<span>alt</span></div>
+      <div class="tagline">Soluções Digitais &amp; Web</div>
+    </div>
+    <div class="doc-meta">
+      <div class="doc-label">Proposta Comercial</div>
+      <div class="doc-date">Abril de 2025</div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="eyebrow">✦ &nbsp; Desenvolvimento Web &nbsp; ✦</div>
+    <h1>Página da Feira Municipal<br>com <em>Presença Digital</em><br>Profissional</h1>
+    <p class="intro">
+      Criação de um site institucional para evento da prefeitura, com design claro,
+      responsivo e otimizado para divulgação oficial, engajamento e credibilidade.
+    </p>
+  </section>
+
+  <div class="divider"><div class="dot"></div></div>
+
+  <!-- SCOPE -->
+  <p class="section-title">01 — Escopo do Projeto</p>
+  <div class="scope-grid">
+    <div class="scope-card">
+      <div class="num">01</div>
+      <h3>Página de Informações do Evento</h3>
+      <p>Landing page completa com todas as informações do evento: data, local, programação, palestrantes, inscrição e contato.</p>
+      <span class="tag">One Page</span>
+    </div>
+    <div class="scope-card">
+      <div class="num">02</div>
+      <h3>Design Exclusivo e Responsivo</h3>
+      <p>Identidade visual única criada para o evento. Layout adaptado para celular, tablet e desktop com experiência premium.</p>
+      <span class="tag">Mobile First</span>
+    </div>
+    <div class="scope-card">
+      <div class="num">03</div>
+      <h3>Conteúdo Dinâmico e Notícias</h3>
+      <p>Estrutura pronta para publicar notícias, comunicados e atualizações da feira, mantendo o público informado em tempo real.</p>
+      <span class="tag">Atualizações</span>
+    </div>
+    <div class="scope-card">
+      <div class="num">04</div>
+      <h3>Otimização e Performance</h3>
+      <p>Código limpo e otimizado para carregamento rápido, SEO básico e compatibilidade com todos os navegadores modernos.</p>
+      <span class="tag">SEO Básico</span>
+    </div>
+  </div>
+
+  <div class="divider"><div class="dot"></div></div>
+
+  <!-- DELIVERABLES -->
+  <p class="section-title">02 — O que está incluso</p>
+  <div class="deliverables">
+
+    <div class="deliverable-item">
+      <div class="check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="content">
+        <h4>Site em HTML — Página Única de Evento</h4>
+        <p>Desenvolvimento completo da página com seções de apresentação, programação, local, palestrantes, inscrição e rodapé.</p>
+      </div>
+    </div>
+
+    <div class="deliverable-item">
+      <div class="check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="content">
+        <h4>Design Personalizado com Identidade do Evento</h4>
+        <p>Paleta de cores, tipografia e elementos visuais alinhados à proposta do evento. Arte exclusiva, não usamos templates.</p>
+      </div>
+    </div>
+
+    <div class="deliverable-item">
+      <div class="check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="content">
+        <h4>Seção de Notícias e Comunicados</h4>
+        <p>Área dedicada para divulgar novidades, avisos oficiais e atualizações da programação do evento de forma organizada.</p>
+      </div>
+    </div>
+
+    <div class="deliverable-item">
+      <div class="check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="content">
+        <h4>Responsividade Total</h4>
+        <p>Layout testado e adaptado para smartphones, tablets e desktops — garantindo boa experiência em qualquer tela.</p>
+      </div>
+    </div>
+
+    <div class="deliverable-item">
+      <div class="check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="content">
+        <h4>Revisões Incluídas</h4>
+        <p>Até 2 rodadas de ajustes após entrega da versão inicial, garantindo total alinhamento com a sua visão.</p>
+      </div>
+    </div>
+
+    <div class="deliverable-item">
+      <div class="check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="content">
+        <h4>Entrega de Arquivos Fonte</h4>
+        <p>Código-fonte completo (HTML, CSS, JS) entregue ao contratante ao final do projeto para livre utilização.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer">
+    <div class="disclaimer-title">⚠ &nbsp; Domínio e Hospedagem — Responsabilidade do Contratante</div>
+    <p>
+      Esta proposta <strong>não inclui</strong> contratação de domínio (ex: <em>seueventoaqui.com.br</em>) nem de serviço de hospedagem. 
+      A aquisição, renovação e gestão do domínio e do servidor de hospedagem são de <strong>responsabilidade exclusiva do contratante</strong>. 
+      A Dwalt fornece o suporte técnico para a publicação, mas os custos de infraestrutura digital são independentes desta proposta 
+      e devem ser contratados diretamente pelo cliente junto ao provedor de sua escolha.
+    </p>
+  </div>
+
+  <div class="divider"><div class="dot"></div></div>
+
+  <!-- PRICING -->
+  <p class="section-title">03 — Investimento</p>
+  <div class="pricing-block">
+    <div class="price-row">
+      <div>
+        <div class="price-label">Valor Total do Projeto</div>
+        <div class="price-value"><span>R$</span> 8.000</div>
+      </div>
+      <div class="price-note">
+        Valor único, fixo e sem surpresas.<br>
+        Inclui todas as entregas descritas nesta proposta.
+      </div>
+    </div>
+    <hr class="price-divider">
+    <div class="payment-info">
+      Condições de pagamento a combinar — sugerimos <strong>50% na aprovação</strong> e <strong>50% na entrega final</strong>. 
+      Aceito PIX, transferência bancária ou boleto.
+    </div>
+  </div>
+
+  <div class="divider"><div class="dot"></div></div>
+
+  <!-- TIMELINE -->
+  <p class="section-title">04 — Cronograma Estimado</p>
+  <div class="timeline">
+    <div class="timeline-row">
+      <span class="phase">Fase 01</span>
+      <span class="desc"><strong>Briefing &amp; Alinhamento</strong> — Coleta de materiais, conteúdo e referências visuais. (2–3 dias)</span>
+    </div>
+    <div class="timeline-row">
+      <span class="phase">Fase 02</span>
+      <span class="desc"><strong>Design &amp; Prototipagem</strong> — Criação do layout e identidade visual do site. (3–5 dias)</span>
+    </div>
+    <div class="timeline-row">
+      <span class="phase">Fase 03</span>
+      <span class="desc"><strong>Desenvolvimento</strong> — Codificação em HTML/CSS/JS com responsividade. (4–6 dias)</span>
+    </div>
+    <div class="timeline-row">
+      <span class="phase">Fase 04</span>
+      <span class="desc"><strong>Revisões</strong> — Ajustes conforme feedback do contratante. (2–3 dias)</span>
+    </div>
+    <div class="timeline-row">
+      <span class="phase">Fase 05</span>
+      <span class="desc"><strong>Publicação do Site</strong> — Site pronto no ar com suporte inicial para conteúdo e notícias. (1 dia)</span>
+    </div>
+  </div>
+
+  <div class="divider"><div class="dot"></div></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-block">
+      <div class="label">Emitido por</div>
+      <p>
+        <strong>Dwalt</strong><br>
+        Soluções Digitais &amp; Web<br>
+        weslan27@gmail.com
+      </p>
+      <div class="validity-badge">Validade: 30 dias</div>
+    </div>
+    <div class="footer-block">
+      <div class="label">Observações</div>
+      <p>
+        Esta proposta é confidencial e destinada exclusivamente ao cliente. 
+        Quaisquer ajustes no escopo podem impactar prazo e valor. 
+        Novos serviços serão orçados separadamente.
+      </p>
+    </div>
+  </footer>
+
+</div><!-- .page -->
+</body>
+</html>

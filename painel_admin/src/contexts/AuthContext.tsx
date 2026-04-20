@@ -30,7 +30,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (token) {
-      api.get('/auth/session')
+      // Medusa v2 não expõe GET /auth/session; o perfil do admin é /admin/users/me
+      api.get('/admin/users/me')
         .then((res) => {
           const u = res.data.user
           setUser(u)
@@ -53,7 +54,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const t = res.data.token
     localStorage.setItem('medusa_token', t)
     setToken(t)
-    const meRes = await api.get('/auth/session', {
+    const meRes = await api.get('/admin/users/me', {
       headers: { Authorization: `Bearer ${t}` },
     })
     const u = meRes.data.user
@@ -62,7 +63,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const logout = () => {
-    api.delete('/auth/session').catch(() => {})
+    // Sessão por cookie (DELETE /auth/session) não se aplica quando só usamos JWT no header
     setToken(null)
     setUser(null)
     localStorage.removeItem('medusa_token')

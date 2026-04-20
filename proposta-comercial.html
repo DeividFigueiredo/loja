@@ -297,6 +297,11 @@
       page-break-inside: avoid;
     }
 
+    .print-break {
+      page-break-before: always;
+      break-before: page;
+    }
+
     .section-title {
       display: flex;
       align-items: center;
@@ -649,7 +654,42 @@
     /* ── PRINT ── */
     @media print {
       body { background: var(--bg); }
-      .page { margin: 0; padding: 11mm 13mm; }
+      .page {
+        margin: 0;
+        padding: 11mm 13mm;
+        min-height: auto;
+        overflow: visible;
+      }
+
+      .section {
+        margin-bottom: 4mm;
+      }
+
+      .body-text {
+        line-height: 1.65;
+      }
+
+      .card {
+        padding: 3.2mm 4.2mm;
+      }
+
+      .feature-list {
+        gap: 1.5mm 4mm;
+      }
+
+      .feature-list li {
+        font-size: 12px;
+        line-height: 1.45;
+      }
+
+      .footer {
+        margin-top: 4mm;
+        padding-top: 3mm;
+      }
+
+      .print-break {
+        margin-top: 0;
+      }
     }
 
     @page { size: A4; margin: 0; }
@@ -769,7 +809,7 @@
   </div>
 
   <!-- ── 3. FUNCIONAMENTO ── -->
-  <div class="section">
+  <div class="section print-break">
     <div class="section-title">
       <span class="section-num">03</span>
       <h2>Funcionamento da Solução</h2>
@@ -870,7 +910,7 @@
   </div>
 
   <!-- ── 6. CONSIDERAÇÕES FINAIS ── -->
-  <div class="section">
+  <div class="section print-break">
     <div class="section-title">
       <span class="section-num">06</span>
       <h2>Considerações Finais</h2>

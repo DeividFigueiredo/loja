@@ -6,7 +6,7 @@ Este projeto tem 3 partes independentes:
 |-------------|--------------|-------|-----------------------|-------------------------------------------|
 | **gateway** | `gateway/`   | 3000  | Express.js (Node)     | API-only: decide Medusa vs Shopify, normaliza dados |
 | **backend** | `backend/`   | 9000  | Medusa v2 (Node/TS)   | Motor de e-commerce headless, banco de dados, admin |
-| **frontend**| `frontend/`  | 5000  | Express.js (estático) | Serve a UI da loja (`public/index.html`)  |
+| **frontend**| `front_loja/`| 5000  | React + Vite            | UI da loja (`src/`, `npm run dev` / `start`) |
 
 ## Estrutura de pastas
 
@@ -24,12 +24,12 @@ shopfytestes/               ← package name: "lojavirtual"
 │   ├── medusa-config.ts
 │   ├── package.json        ← name: "backend"
 │   └── .env                ← DATABASE_URL, CORS, secrets
-├── frontend/               ← porta 5000 — UI customizada
-│   ├── server.js           ← Express estático simples
-│   ├── public/
-│   │   └── index.html      ← interface da loja
-│   ├── package.json        ← name: "frontend"
-│   └── .env                ← PORT=5000
+├── front_loja/             ← porta 5000 — Vite + React
+│   ├── index.html          ← entrada Vite
+│   ├── src/                ← componentes e páginas
+│   ├── dist/               ← saída do `npm run build` (deploy)
+│   ├── package.json
+│   └── .env                ← VITE_* (ex.: URL do gateway)
 └── package.json            ← name: "lojavirtual", scripts raiz
 ```
 
