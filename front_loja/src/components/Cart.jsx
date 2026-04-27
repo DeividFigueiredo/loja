@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useCart } from '../context/CartContext.jsx'
 
-const GATEWAY = import.meta.env.VITE_GATEWAY_URL || 'http://localhost:3000'
+const GATEWAY = import.meta.env.VITE_GATEWAY_URL || ''
 
 const CloseIcon = () => <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><line x1="1" y1="1" x2="19" y2="19" stroke="currentColor" strokeWidth="1.5"/><line x1="19" y1="1" x2="1" y2="19" stroke="currentColor" strokeWidth="1.5"/></svg>
 const TrashIcon = () => <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>

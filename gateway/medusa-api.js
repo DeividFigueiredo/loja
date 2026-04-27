@@ -9,6 +9,23 @@ const PUBLISHABLE_KEY = process.env.MEDUSA_PUBLISHABLE_KEY || process.env.NEXT_P
 const STOREFRONT_URL = process.env.MEDUSA_STOREFRONT_URL || 'http://localhost:5000';
 const DEFAULT_COUNTRY = (process.env.NEXT_PUBLIC_DEFAULT_REGION || 'br').toLowerCase();
 
+function normalizeAssetUrl(url) {
+  if (!url) return null;
+
+  try {
+    const parsed = new URL(url, BACKEND || undefined);
+    const backend = BACKEND ? new URL(BACKEND) : null;
+
+    if (backend && parsed.origin === backend.origin) {
+      return `${parsed.pathname}${parsed.search}${parsed.hash}`;
+    }
+
+    return parsed.toString();
+  } catch {
+    return url;
+  }
+}
+
 const headers = () => ({
   'Content-Type': 'application/json',
   'x-publishable-api-key': PUBLISHABLE_KEY || '',
@@ -40,8 +57,8 @@ async function getFirstRegionId() {
  */
 function toImageUrl(img) {
   if (!img) return null;
-  if (typeof img === 'string') return img;
-  return img.url || img.src || null;
+  if (typeof img === 'string') return normalizeAssetUrl(img);
+  return normalizeAssetUrl(img.url || img.src || null);
 }
 
 function pickVariantImageUrl(variant, product, fallbackIndex) {

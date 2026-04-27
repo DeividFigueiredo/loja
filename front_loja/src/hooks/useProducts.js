@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const GATEWAY = import.meta.env.VITE_GATEWAY_URL || 'http://localhost:3000'
+const GATEWAY = import.meta.env.VITE_GATEWAY_URL || ''
 
 export function useProducts(limit = 24) {
   const [products, setProducts] = useState([])
