@@ -7,6 +7,7 @@ import Cart from './components/Cart.jsx'
 import Home from './pages/Home.jsx'
 import QuemSomos from './pages/QuemSomos.jsx'
 import Catalogo from './pages/Catalogo.jsx'
+import ProdutoDetalhe from './pages/ProdutoDetalhe.jsx'
 import Contato from './pages/Contato.jsx'
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="/"           element={<Home />} />
           <Route path="/quem-somos" element={<QuemSomos />} />
           <Route path="/catalogo"   element={<Catalogo />} />
+          <Route path="/catalogo/:productId" element={<ProdutoDetalhe />} />
           <Route path="/contato"    element={<Contato />} />
         </Routes>
       </main>

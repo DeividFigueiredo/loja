@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useProducts } from '../hooks/useProducts.js'
 import { useCart } from '../context/CartContext.jsx'
 
@@ -15,14 +15,40 @@ const FALLBACK = [
   { id:'f9', title:'Travertino Romano',          description:'Pedra sedimentar italiana com textura porosa única. Clássico e atemporal para fachadas e pisos.',                 images:[{url:'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=600&q=80&auto=format&fit=crop'}], collection:{title:'Travertino'}, variants:[{id:'v9',title:'Padrão'}] },
 ]
 
-function ProductCard({ product, onAddToCart }) {
+function ProductCard({ product, onAddToCart, onOpen }) {
   const img     = product.images?.[0]?.url
   const variant = product.variants?.[0]
   const price   = variant?.prices?.[0]?.amount
   const cat     = product.collection?.title || product.type?.value || 'Pedra Natural'
+  const allSelectedOptions = (product.variants || []).flatMap(v => v.selectedOptions || [])
+  let colors = Array.from(new Set(
+    allSelectedOptions
+      .filter(o => /cor|color/i.test(o.name || '') || /cor|color/i.test(o.value || ''))
+      .map(o => (o.name || o.value || '').trim())
+      .filter(Boolean)
+  ))
+  if (colors.length === 0) {
+    colors = Array.from(new Set(
+      allSelectedOptions
+        .map(o => (o.name || o.value || '').trim())
+        .filter(Boolean)
+    ))
+  }
 
   return (
-    <div className="product-card">
+    <div
+      className="product-card"
+      style={{ cursor: 'pointer' }}
+      role="button"
+      tabIndex={0}
+      onClick={() => onOpen(product)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          onOpen(product)
+        }
+      }}
+    >
       <div style={{ overflow:'hidden', position:'relative' }}>
         {img
           ? <img src={img} alt={product.title} className="product-card__image" />
@@ -39,12 +65,27 @@ function ProductCard({ product, onAddToCart }) {
       <div className="product-card__body">
         <div className="product-card__name">{product.title}</div>
         {product.description && <div className="product-card__desc">{product.description}</div>}
+        {colors.length > 0 && (
+          <div style={{ display:'flex', flexWrap:'wrap', gap:'6px', marginBottom:'10px' }}>
+            {colors.slice(0, 5).map(color => (
+              <span key={color} style={{ fontSize:'10px', letterSpacing:'1px', textTransform:'uppercase', color:'#6f634e', border:'1px solid rgba(187,187,136,0.45)', padding:'3px 8px', background:'#fffaf0' }}>
+                {color}
+              </span>
+            ))}
+          </div>
+        )}
         <div className="product-card__footer">
           {price
             ? <div className="product-card__price">{new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(price/100)}</div>
             : <div style={{fontSize:'11px',letterSpacing:'3px',textTransform:'uppercase',color:'#7a6e58'}}>Sob Consulta</div>
           }
-          <button className="product-card__btn" onClick={() => variant && onAddToCart(product, variant.id)}>
+          <button
+            className="product-card__btn"
+            onClick={(e) => {
+              e.stopPropagation()
+              if (variant) onAddToCart(product, variant.id)
+            }}
+          >
             <span>{price ? 'Adicionar' : 'Solicitar'}</span><span>→</span>
           </button>
         </div>
@@ -56,8 +97,13 @@ function ProductCard({ product, onAddToCart }) {
 export default function Catalogo() {
   const { products: api, loading } = useProducts(50)
   const { addItem } = useCart()
+  const navigate = useNavigate()
   const [activeFilter, setActiveFilter] = useState('Todos')
   const [search, setSearch] = useState('')
+
+  const openProduct = (product) => {
+    navigate(`/catalogo/${encodeURIComponent(product.id)}`, { state: { product } })
+  }
 
   const products = api.length > 0 ? api : FALLBACK
 
@@ -142,7 +188,7 @@ export default function Catalogo() {
                     {filtered.length} {filtered.length===1?'produto':'produtos'}
                   </div>
                   <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(340px,1fr))', gap:'24px' }}>
-                    {filtered.map(p => <ProductCard key={p.id} product={p} onAddToCart={addItem} />)}
+                    {filtered.map(p => <ProductCard key={p.id} product={p} onAddToCart={addItem} onOpen={openProduct} />)}
                   </div>
                 </>
           }
