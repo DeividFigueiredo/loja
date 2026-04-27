@@ -11,5 +11,15 @@ export default defineConfig({
     port: 5000,
     // Libera requisições de qualquer Host (ex.: domínios do ngrok).
     allowedHosts: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
+      '/static': {
+        target: 'http://localhost:9000',
+        changeOrigin: true,
+      },
+    },
   },
 })

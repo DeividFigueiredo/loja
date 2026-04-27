@@ -138,20 +138,20 @@ export default function ProdutoDetalhe() {
 
   return (
     <div>
-      <section style={{ padding: '130px 0 36px', background: '#fdfbf4', borderBottom: '1px solid rgba(187,187,136,0.25)' }}>
+      <section className="product-detail__backdrop product-detail__backdrop--top">
         <div className="container">
-          <Link to="/catalogo" style={{ fontSize: '11px', letterSpacing: '3px', textTransform: 'uppercase', color: '#7a6e58' }}>
+          <Link to="/catalogo" className="product-detail__back-link">
             ← Voltar ao Catálogo
           </Link>
         </div>
       </section>
 
-      <section style={{ padding: '36px 0 100px', background: '#f5ece0' }}>
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: 'minmax(320px, 1.1fr) minmax(320px, 1fr)', gap: '32px' }}>
-          <div className="product-card" style={{ overflow: 'hidden' }}>
+      <section className="product-detail__backdrop product-detail__backdrop--content">
+        <div className="container product-detail__grid">
+          <div className="product-card product-detail__media-card">
             {activeImage
               ? (
-                <div style={{ position: 'relative', width: '100%', aspectRatio: '4/3' }}>
+                <div className="product-detail__media-frame">
                   <img
                     src={activeImage}
                     alt={product.title}
@@ -174,19 +174,19 @@ export default function ProdutoDetalhe() {
                   )}
                 </div>
               )
-              : <div style={{ width: '100%', aspectRatio: '4/3', display: 'grid', placeItems: 'center', background: '#f7eee1', color: '#b9a98f', fontSize: '44px' }}>◈</div>
+              : <div className="product-detail__media-fallback">◈</div>
             }
           </div>
 
-          <div className="product-card" style={{ padding: '32px' }}>
-            <div style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '3px', textTransform: 'uppercase', color: '#787848', marginBottom: '10px' }}>{category}</div>
-            <h1 style={{ fontSize: 'clamp(34px,4.5vw,58px)', lineHeight: 1.02, marginBottom: '14px' }}>{product.title}</h1>
-            {product.description && <p style={{ color: '#5b4f39', lineHeight: 1.9, marginBottom: '22px' }}>{product.description}</p>}
+          <div className="product-card product-detail__content-card">
+            <div className="product-detail__category">{category}</div>
+            <h1 className="product-detail__title">{product.title}</h1>
+            {product.description && <p className="product-detail__description">{product.description}</p>}
 
             {!!product.variants?.length && (
-              <div style={{ marginBottom: '22px' }}>
-                <div style={{ fontSize: '10px', letterSpacing: '2px', textTransform: 'uppercase', color: '#7a6e58', marginBottom: '10px' }}>Variações</div>
-                <div style={{ display: 'grid', gap: '8px' }}>
+              <div className="product-detail__variants">
+                <div className="product-detail__variants-label">Variações</div>
+                <div className="product-detail__variants-list">
                   {product.variants.map(v => {
                     const vPrice = v?.prices?.[0]?.amount || null
                     const isActive = v.id === selectedVariant?.id
@@ -196,12 +196,12 @@ export default function ProdutoDetalhe() {
                       <button
                         key={v.id}
                         onClick={() => setSelectedVariantId(v.id)}
+                        className="product-detail__variant-button"
                         style={{
                           border: `1.5px solid ${isActive ? '#c47040' : 'rgba(187,187,136,0.4)'}`,
                           background: isActive ? '#fff5ea' : '#fff',
                           color: '#3f3423',
                           textAlign: 'left',
-                          padding: '10px 12px',
                         }}
                       >
                         <div style={{ fontSize: '14px', fontWeight: 500 }}>{v.title || 'Variação'}</div>
@@ -214,14 +214,14 @@ export default function ProdutoDetalhe() {
               </div>
             )}
 
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: '1px solid rgba(187,187,136,0.25)', paddingTop: '18px', gap: '12px', flexWrap: 'wrap' }}>
+            <div className="product-detail__purchase-row">
               {price
-                ? <div style={{ fontFamily: 'var(--font-serif)', fontSize: '34px', color: '#1e1a0e' }}>{formatPrice(price)}</div>
-                : <div style={{ fontSize: '11px', letterSpacing: '3px', textTransform: 'uppercase', color: '#7a6e58' }}>Sob Consulta</div>
+                ? <div className="product-detail__price">{formatPrice(price)}</div>
+                : <div className="product-detail__price-state">Sob Consulta</div>
               }
 
               <button
-                className="btn-accent"
+                className="btn-accent product-detail__add-button"
                 onClick={() => {
                   if (selectedVariant) addItem(product, selectedVariant.id)
                 }}
