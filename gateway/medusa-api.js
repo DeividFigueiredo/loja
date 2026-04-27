@@ -44,6 +44,31 @@ function toImageUrl(img) {
   return img.url || img.src || null;
 }
 
+function pickVariantImageUrl(variant, product, fallbackIndex) {
+  const vImages = Array.isArray(variant?.images) ? variant.images : [];
+  const pImages = Array.isArray(product?.images) ? product.images : [];
+
+  // Fonte de verdade: imagem explicitamente vinculada à variante.
+  const explicitVariantImage = vImages.find((img) =>
+    Array.isArray(img?.variants) && img.variants.some((ref) => ref?.id === variant?.id)
+  );
+  if (explicitVariantImage) {
+    const url = toImageUrl(explicitVariantImage);
+    if (url) return url;
+  }
+
+  // Fallback 1: primeira imagem já retornada para a variante.
+  const firstVariantImage = toImageUrl(vImages[0]);
+  if (firstVariantImage) return firstVariantImage;
+
+  // Fallback 2: imagem do produto por rank/índice.
+  const rankedProductImage = toImageUrl(pImages[fallbackIndex]);
+  if (rankedProductImage) return rankedProductImage;
+
+  // Fallback 3: primeira imagem do produto.
+  return toImageUrl(pImages[0]) || null;
+}
+
 function mapProduct(p) {
   const thumbnail = p.thumbnail || p.images?.[0];
   const featuredUrl = toImageUrl(thumbnail);
@@ -57,7 +82,7 @@ function mapProduct(p) {
     images.push({ url: featuredUrl });
   }
 
-  const variants = (p.variants || []).map((v) => {
+  const variants = (p.variants || []).map((v, idx) => {
     const calc = v.calculated_price;
     let amount = calc?.calculated_amount ?? calc?.amount;
     if (amount == null && Array.isArray(v.prices) && v.prices.length > 0) {
@@ -73,7 +98,8 @@ function mapProduct(p) {
     const inStock = v.manage_inventory
       ? (v.inventory_quantity ?? 0) > 0 || v.allow_backorder
       : true;
-    const imgUrl = toImageUrl(v.images?.[0]) || featuredUrl;
+    const imageIndex = Number.isInteger(v.variant_rank) ? v.variant_rank : idx;
+    const imgUrl = pickVariantImageUrl(v, p, imageIndex) || featuredUrl;
     return {
       id: v.id,
       title,
@@ -82,6 +108,7 @@ function mapProduct(p) {
       compareAtPrice: null,
       availableForSale: inStock,
       selectedOptions: optList,
+      variantRank: imageIndex,
       image: imgUrl ? { url: imgUrl } : null,
     };
   });

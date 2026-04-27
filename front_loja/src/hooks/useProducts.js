@@ -12,7 +12,7 @@ export function useProducts(limit = 24) {
     setLoading(true)
     setError(null)
 
-    fetch(`${GATEWAY}/api/products?limit=${limit}`)
+    fetch(`${GATEWAY}/api/products?limit=${limit}`, { cache: 'no-store' })
       .then(r => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`)
         return r.json()

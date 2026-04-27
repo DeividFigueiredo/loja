@@ -3,47 +3,14 @@ import { Link, useLocation, useParams } from 'react-router-dom'
 import { useProducts } from '../hooks/useProducts.js'
 import { useCart } from '../context/CartContext.jsx'
 
-function buildColorChoices(product, selectedVariant) {
-  const variantOptions = selectedVariant?.selectedOptions || []
-  const variantImages = (selectedVariant?.images || product?.images || [])
-    .map((img) => img?.url)
-    .filter(Boolean)
-
-  // 1) Prioriza os nomes digitados no admin (ex.: creme, marrom, verdinha).
-  let labels = Array.from(new Set(
-    variantOptions
-      .map((o) => (o?.name || '').trim())
-      .filter(Boolean)
-  ))
-
-  // 2) Se não vier pela variante, tenta opções do produto.
-  if (!labels.length) {
-    labels = Array.from(new Set(
-      (product?.options || [])
-        .map((o) => (o?.title || '').trim())
-        .filter(Boolean)
-    ))
-  }
-
-  // 3) Fallback para valores de opção.
-  if (!labels.length) {
-    labels = Array.from(new Set(
-      variantOptions
-        .map((o) => (o?.value || '').trim())
-        .filter(Boolean)
-    ))
-  }
-
-  const fallbackImage = variantImages[0] || product?.featuredImage?.url || null
-  return labels.map((label, idx) => ({
-    label,
-    image: variantImages[idx] || fallbackImage,
-  }))
-}
-
 function formatPrice(cents) {
-  if (!cents) return null
-  return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(cents / 100)
+  const value = Number(cents)
+  if (!Number.isFinite(value)) return null
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    minimumFractionDigits: 2,
+  }).format(value / 100)
 }
 
 export default function ProdutoDetalhe() {
@@ -56,12 +23,13 @@ export default function ProdutoDetalhe() {
 
   const product = useMemo(() => {
     const fromState = state?.product
+    const fromApi = (products || []).find((p) => p.id === decodedId)
+    if (fromApi) return fromApi
     if (fromState?.id === decodedId) return fromState
-    return (products || []).find(p => p.id === decodedId) || null
+    return null
   }, [state, products, decodedId])
 
   const [selectedVariantId, setSelectedVariantId] = useState('')
-  const [selectedColor, setSelectedColor] = useState('')
   const [activeImage, setActiveImage] = useState(null)
   const [incomingImage, setIncomingImage] = useState(null)
   const [incomingVisible, setIncomingVisible] = useState(false)
@@ -79,20 +47,24 @@ export default function ProdutoDetalhe() {
     [product, selectedVariantId]
   )
 
-  const colorChoices = useMemo(() => buildColorChoices(product, selectedVariant), [product, selectedVariant])
+  const selectedVariantIndex = useMemo(() => {
+    const byRank = Number(selectedVariant?.variantRank)
+    if (Number.isInteger(byRank) && byRank >= 0) return byRank
 
-  useEffect(() => {
-    if (!colorChoices.length) {
-      setSelectedColor('')
-      return
-    }
-    if (!selectedColor || !colorChoices.some((c) => c.label === selectedColor)) {
-      setSelectedColor(colorChoices[0].label)
-    }
-  }, [colorChoices, selectedColor])
+    const byId = (product?.variants || []).findIndex((v) => v.id === selectedVariantId)
+    if (byId >= 0) return byId
 
-  const selectedColorImage = colorChoices.find((c) => c.label === selectedColor)?.image || null
-  const image = selectedColorImage || selectedVariant?.image?.url || product?.images?.[0]?.url || product?.featuredImage?.url || null
+    return 0
+  }, [product, selectedVariant, selectedVariantId])
+
+  const image =
+    selectedVariant?.image?.url ||
+    selectedVariant?.images?.[selectedVariantIndex]?.url ||
+    selectedVariant?.images?.[0]?.url ||
+    product?.images?.[selectedVariantIndex]?.url ||
+    product?.images?.[0]?.url ||
+    product?.featuredImage?.url ||
+    null
   const price = selectedVariant?.prices?.[0]?.amount || null
   const category = product?.collection?.title || product?.type?.value || 'Pedra Natural'
 
@@ -210,31 +182,6 @@ export default function ProdutoDetalhe() {
             <div style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '3px', textTransform: 'uppercase', color: '#787848', marginBottom: '10px' }}>{category}</div>
             <h1 style={{ fontSize: 'clamp(34px,4.5vw,58px)', lineHeight: 1.02, marginBottom: '14px' }}>{product.title}</h1>
             {product.description && <p style={{ color: '#5b4f39', lineHeight: 1.9, marginBottom: '22px' }}>{product.description}</p>}
-
-            {colorChoices.length > 0 && (
-              <div style={{ marginBottom: '20px' }}>
-                <div style={{ fontSize: '10px', letterSpacing: '2px', textTransform: 'uppercase', color: '#7a6e58', marginBottom: '8px' }}>Cores Disponíveis</div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                  {colorChoices.map(({ label }) => (
-                    <button
-                      key={label}
-                      onClick={() => setSelectedColor(label)}
-                      style={{
-                        fontSize: '11px',
-                        letterSpacing: '1px',
-                        textTransform: 'uppercase',
-                        color: '#6f634e',
-                        border: `1px solid ${selectedColor === label ? '#c47040' : 'rgba(187,187,136,0.45)'}`,
-                        padding: '5px 10px',
-                        background: selectedColor === label ? '#fff2e4' : '#fffaf0',
-                      }}
-                    >
-                      {label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
 
             {!!product.variants?.length && (
               <div style={{ marginBottom: '22px' }}>

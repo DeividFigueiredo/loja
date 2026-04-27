@@ -1,7 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useProducts } from '../hooks/useProducts.js'
 import { useCart } from '../context/CartContext.jsx'
+
 
 const HERO_IMG  = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=85&auto=format&fit=crop'
 const MID_IMG   = 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80&auto=format&fit=crop'
@@ -37,13 +38,30 @@ const FALLBACK = [
 
 function ProductCard({ product }) {
   const { addItem } = useCart()
+  const navigate = useNavigate()
   const img     = product.images?.[0]?.url || product.img
   const variant = product.variants?.[0]
   const price   = variant?.prices?.[0]?.amount
   const cat     = product.collection?.title || product.type?.value || product.category || 'Pedra Natural'
+  const openProduct = () => {
+    if (!product?.id) return
+    navigate(`/catalogo/${encodeURIComponent(product.id)}`, { state: { product } })
+  }
 
   return (
-    <div className="product-card">
+    <div
+      className="product-card"
+      onClick={openProduct}
+      role="button"
+      tabIndex={0}
+      style={{ cursor:'pointer' }}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          openProduct()
+        }
+      }}
+    >
       <div style={{ overflow:'hidden', position:'relative' }}>
         {img
           ? <img src={img} alt={product.title} className="product-card__image" />
@@ -65,7 +83,17 @@ function ProductCard({ product }) {
             ? <div className="product-card__price">{new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(price/100)}</div>
             : <div style={{fontSize:'11px',letterSpacing:'3px',textTransform:'uppercase',color:'#7a6e58'}}>Sob Consulta</div>
           }
-          <button className="product-card__btn" onClick={() => variant && addItem(product, variant.id)}>
+          <button
+            className="product-card__btn"
+            onClick={(e) => {
+              e.stopPropagation()
+              if (variant) {
+                addItem(product, variant.id)
+              } else {
+                openProduct()
+              }
+            }}
+          >
             <span>{price ? 'Adicionar' : 'Solicitar'}</span><span>→</span>
           </button>
         </div>
